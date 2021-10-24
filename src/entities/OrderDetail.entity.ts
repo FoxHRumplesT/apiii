@@ -3,8 +3,12 @@ import {
   Column,
   PrimaryGeneratedColumn,
   BeforeUpdate,
-  BeforeInsert
+  BeforeInsert,
+  ManyToOne,
+  JoinColumn
 } from 'typeorm';
+import { Order } from './order.entity';
+import { AllieDetail } from './allieDetail.entity';
 
 @Entity('OrderDetail')
 export class OrderDetail {
@@ -43,6 +47,14 @@ export class OrderDetail {
     nullable: true
   })
   deletedAt: Date;
+
+  @ManyToOne(() => Order, (order: Order) => order.orderDetails, {})
+  @JoinColumn({ name: 'orderId' })
+  order: Order | null;
+
+  @ManyToOne(() => AllieDetail, (allieDetail: AllieDetail) => allieDetail.orderDetails, {})
+  @JoinColumn({ name: 'allieDetailId' })
+  allieDetail: AllieDetail | null;
 
   @BeforeUpdate()
   beforeUpdate() {

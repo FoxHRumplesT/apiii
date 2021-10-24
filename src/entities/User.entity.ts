@@ -3,8 +3,15 @@ import {
   Column,
   PrimaryGeneratedColumn,
   BeforeUpdate,
-  BeforeInsert
+  BeforeInsert,
+  ManyToOne,
+  JoinColumn,
+  OneToMany
 } from 'typeorm';
+import { Rol } from './rol.entity';
+import { Suscription } from './suscription.entity';
+import { City } from './city.entity';
+import { Order } from './order.entity';
 
 @Entity('User')
 export class User {
@@ -91,6 +98,21 @@ export class User {
     nullable: true
   })
   deletedAt: Date;
+
+  @ManyToOne(() => Rol, (rol: Rol) => rol.users, {})
+  @JoinColumn({ name: 'rolId' })
+  rol: Rol | null;
+
+  @ManyToOne(() => Suscription, (suscription: Suscription) => suscription.users, {})
+  @JoinColumn({ name: 'suscriptionId' })
+  suscription: Suscription | null;
+
+  @ManyToOne(() => City, (city: City) => city.users, {})
+  @JoinColumn({ name: 'cityId' })
+  city: City | null;
+
+  @OneToMany(() => Order, (order: Order) => order.user)
+  orders: Order[];
 
   @BeforeUpdate()
   beforeUpdate() {

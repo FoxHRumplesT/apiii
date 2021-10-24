@@ -3,8 +3,10 @@ import {
   Column,
   PrimaryGeneratedColumn,
   BeforeUpdate,
-  BeforeInsert
+  BeforeInsert,
+  OneToMany
 } from 'typeorm';
+import { AllieDetail } from './allieDetail.entity';
 
 @Entity('AllieDetailType')
 export class AllieDetailType {
@@ -37,6 +39,9 @@ export class AllieDetailType {
     nullable: true
   })
   deletedAt: Date;
+
+  @OneToMany(() => AllieDetail, (allieDetail: AllieDetail) => allieDetail.allieDetailType)
+  allieDetails: AllieDetail[];
 
   @BeforeUpdate()
   beforeUpdate() {

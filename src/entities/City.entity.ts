@@ -3,8 +3,13 @@ import {
   Column,
   PrimaryGeneratedColumn,
   BeforeUpdate,
-  BeforeInsert
+  BeforeInsert,
+  ManyToOne,
+  JoinColumn,
+  OneToMany
 } from 'typeorm';
+import { Country } from './country.entity';
+import { User } from './user.entity';
 
 @Entity('City')
 export class City {
@@ -12,6 +17,9 @@ export class City {
     type: 'bigint'
   })
   id: number;
+
+  @Column('bigint')
+  countryId: number;
 
   @Column('varchar', {
     length: 200
@@ -37,6 +45,13 @@ export class City {
     nullable: true
   })
   deletedAt: Date;
+
+  @ManyToOne(() => Country, (country: Country) => country.cities, {})
+  @JoinColumn({ name: 'countryId' })
+  country: Country | null;
+
+  @OneToMany(() => User, (user: User) => user.city)
+  users: User[];
 
   @BeforeUpdate()
   beforeUpdate() {

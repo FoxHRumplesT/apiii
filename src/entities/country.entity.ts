@@ -6,10 +6,10 @@ import {
   BeforeInsert,
   OneToMany
 } from 'typeorm';
-import { User } from './user.entity';
+import { City } from './city.entity';
 
-@Entity('Rol')
-export class Rol {
+@Entity('Country')
+export class Country {
   @PrimaryGeneratedColumn({
     type: 'bigint'
   })
@@ -40,8 +40,8 @@ export class Rol {
   })
   deletedAt: Date;
 
-  @OneToMany(() => User, (user: User) => user.rol)
-  users: User[];
+  @OneToMany(() => City, (city: City) => city.country)
+  cities: City[];
 
   @BeforeUpdate()
   beforeUpdate() {

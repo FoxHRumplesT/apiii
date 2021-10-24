@@ -3,8 +3,14 @@ import {
   Column,
   PrimaryGeneratedColumn,
   BeforeUpdate,
-  BeforeInsert
+  BeforeInsert,
+  ManyToOne,
+  JoinColumn,
+  OneToMany
 } from 'typeorm';
+import { AllieType } from './allieType.entity';
+import { AllieStep } from './allieStep.entity';
+import { Order } from './order.entity';
 
 @Entity('Allie')
 export class Allie {
@@ -14,7 +20,7 @@ export class Allie {
   id: number;
 
   @Column('bigint')
-  allieTypeId: string;
+  allieTypeId: number;
 
   @Column('varchar', {
     length: 200
@@ -60,6 +66,16 @@ export class Allie {
     nullable: true
   })
   deletedAt: Date;
+
+  @ManyToOne(() => AllieType, (allieType: AllieType) => allieType.allies, {})
+  @JoinColumn({ name: 'allieTypeId' })
+  allieType: AllieType | null;
+
+  @OneToMany(() => AllieStep, (allieStep: AllieStep) => allieStep.allie)
+  allieSteps: AllieStep[];
+
+  @OneToMany(() => Order, (order: Order) => order.allie)
+  orders: Order[];
 
   @BeforeUpdate()
   beforeUpdate() {

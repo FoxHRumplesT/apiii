@@ -3,8 +3,10 @@ import {
   Column,
   PrimaryGeneratedColumn,
   BeforeUpdate,
-  BeforeInsert
+  BeforeInsert,
+  OneToMany
 } from 'typeorm';
+import { User } from './user.entity';
 
 @Entity('Suscription')
 export class Suscription {
@@ -44,6 +46,9 @@ export class Suscription {
     nullable: true
   })
   deletedAt: Date;
+
+  @OneToMany(() => User, (user: User) => user.suscription)
+  users: User[];
 
   @BeforeUpdate()
   beforeUpdate() {
