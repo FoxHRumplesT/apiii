@@ -4,16 +4,23 @@ import {
   PrimaryGeneratedColumn,
   BeforeUpdate,
   BeforeInsert,
-  OneToMany
+  ManyToOne,
+  JoinColumn
 } from 'typeorm';
-import { Allie } from './allie.entity';
+import { Order, AllieDetail } from './';
 
-@Entity('AllieType')
-export class AllieType {
+@Entity('OrderDetail')
+export class OrderDetail {
   @PrimaryGeneratedColumn({
     type: 'bigint'
   })
   id: number;
+
+  @Column('bigint')
+  orderId: number;
+
+  @Column('bigint')
+  allieDetailId: number;
 
   @Column('varchar', {
     length: 200
@@ -21,9 +28,9 @@ export class AllieType {
   name: string;
 
   @Column('varchar', {
-    length: 200
+    length: 255
   })
-  description: string;
+  imageUrl: string;
 
   @Column('timestamptz', {
     nullable: true
@@ -40,8 +47,13 @@ export class AllieType {
   })
   deletedAt: Date;
 
-  @OneToMany(() => Allie, (allie: Allie) => allie.allieType)
-  allies: Allie[];
+  @ManyToOne(() => Order, (order: Order) => order.orderDetails, {})
+  @JoinColumn({ name: 'orderId' })
+  order: Order | null;
+
+  @ManyToOne(() => AllieDetail, (allieDetail: AllieDetail) => allieDetail.orderDetails, {})
+  @JoinColumn({ name: 'allieDetailId' })
+  allieDetail: AllieDetail | null;
 
   @BeforeUpdate()
   beforeUpdate() {

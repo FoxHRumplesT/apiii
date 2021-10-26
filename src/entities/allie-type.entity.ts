@@ -6,10 +6,10 @@ import {
   BeforeInsert,
   OneToMany
 } from 'typeorm';
-import { AllieDetail } from './allieDetail.entity';
+import { Allie } from './';
 
-@Entity('AllieDetailType')
-export class AllieDetailType {
+@Entity('AllieType')
+export class AllieType {
   @PrimaryGeneratedColumn({
     type: 'bigint'
   })
@@ -40,16 +40,19 @@ export class AllieDetailType {
   })
   deletedAt: Date;
 
-  @OneToMany(() => AllieDetail, (allieDetail: AllieDetail) => allieDetail.allieDetailType)
-  allieDetails: AllieDetail[];
+  @OneToMany(() => Allie, (allie: Allie) => allie.allieType)
+  allies: Allie[];
 
   @BeforeUpdate()
   beforeUpdate() {
+    console.log('Hola mundo');
+
     this.updatedAt = new Date();
   }
 
   @BeforeInsert()
   beforeSave() {
+    console.log('Hola mundo');
     this.createdAt = new Date();
     this.updatedAt = new Date();
   }

@@ -8,9 +8,7 @@ import {
   JoinColumn,
   OneToMany
 } from 'typeorm';
-import { AllieType } from './allieType.entity';
-import { AllieStep } from './allieStep.entity';
-import { Order } from './order.entity';
+import { AllieType, AllieStep, Order } from './';
 
 @Entity('Allie')
 export class Allie {
