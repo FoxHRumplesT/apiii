@@ -21,4 +21,8 @@ export class AllieService {
     allieEntity.latitude = body.latitude;
     return await this.allieRepository.save(allieEntity);
   }
+
+  public async findAll(): Promise<Allie[]> {
+    return await this.allieRepository.find();
+  }
 }

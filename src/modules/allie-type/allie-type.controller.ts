@@ -1,5 +1,5 @@
 import { Controller, Post, HttpCode, Req, Res } from '@nestjs/common';
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import { AllieTypeService } from './allie-type.service';
 import { AllieType } from '../../entities';
 

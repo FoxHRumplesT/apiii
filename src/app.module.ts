@@ -10,7 +10,8 @@ import * as Modules from './modules';
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot(),
     Modules.AllieModule,
-    Modules.AllieTypeModule
+    Modules.AllieTypeModule,
+    Modules.SuscriptionModule
   ],
   controllers: [AppController],
   providers: [AppService],

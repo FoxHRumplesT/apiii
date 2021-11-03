@@ -30,7 +30,7 @@ export class Suscription {
     scale: 2,
     default: 0
   })
-  value: string;
+  value: number;
 
   @Column('timestamptz', {
     nullable: true
