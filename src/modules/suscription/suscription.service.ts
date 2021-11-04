@@ -25,7 +25,7 @@ export class SuscriptionService {
     return await this.suscriptionRepository.find();
   }
 
-  public async sendEmail(): Promise<String> {
+  public async sendEmail(body: { email: string[] }): Promise<String> {
     const oAuth2Client = new google.auth.OAuth2(
       process.env.CLIENT_ID,
       process.env.CLIENT_SECRET,
@@ -50,13 +50,12 @@ export class SuscriptionService {
 
       const mailOptions = {
         from: 'Hola <tech@monti.com.es>',
-        to: 'gomezsernadaniela@gmail.com, oscar.rincon.paez@gmail.com',
+        to: body.email.join(),
         subject: 'Hola',
         text: 'Bienvenido/a a Monti! c:',
         html: '<h1>Bienvenido/a a Monti! c:'
       }
-      const result = await transport.sendMail(mailOptions);
-      console.info('SEND_MESSAGE', result);
+      transport.sendMail(mailOptions);
       return 'Message success';
     } catch (error) {
       console.error('SEND_MESSAGE_ERROR', error);
