@@ -11,7 +11,11 @@ import * as Modules from './modules';
     TypeOrmModule.forRoot(),
     Modules.AllieModule,
     Modules.AllieTypeModule,
-    Modules.SuscriptionModule
+    Modules.SuscriptionModule,
+    Modules.UserModule,
+    Modules.RolModule,
+    Modules.CountryModule,
+    Modules.CityModule
   ],
   controllers: [AppController],
   providers: [AppService],
