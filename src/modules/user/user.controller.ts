@@ -12,4 +12,10 @@ export class UserController {
   public async create(@Req() req: Request): Promise<User> {
     return await this.userService.create(req.body);
   }
+
+  @Post('/login')
+  @HttpCode(200)
+  public async login(@Req() req: Request): Promise<User> {
+    return await this.userService.login(req.body);
+  }
 }

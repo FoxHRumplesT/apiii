@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../../entities';
@@ -27,5 +27,32 @@ export class UserService {
     userEntity.ocupation = body.ocupation;
     userEntity.birthdayAt = body.birthdayAt;
     return await this.userRepository.save(userEntity);
+  }
+
+  public async login(body: Dto.LoginDto): Promise<User> {
+    try {
+      if (!body.email || !body.password) throw new HttpException({
+        status: HttpStatus.BAD_REQUEST,
+        error: 'Usuario y/o contraseña invalido',
+      }, HttpStatus.BAD_REQUEST);
+      const getUser = await this.userRepository.findOne({
+        email: body.email,
+        password: body.password
+      });
+      if (getUser) {
+        return getUser;
+      } else {
+        throw new HttpException({
+          status: HttpStatus.BAD_REQUEST,
+          error: 'Usuario y/o contraseña invalido',
+        }, HttpStatus.BAD_REQUEST);
+      }
+    } catch (error) {
+      console.error('LOGIN_ERROR', error);
+      throw new HttpException({
+        status: error.status || HttpStatus.INTERNAL_SERVER_ERROR,
+        error: error.response.error || 'Internal server error',
+      }, error.status || HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }
