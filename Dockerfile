@@ -1,13 +1,11 @@
-FROM node:14.16.1
-
-COPY package.json /monti-api/
+FROM node:14.16.1-alpine
 
 WORKDIR /monti-api
 
+COPY package.json /monti-api/
+
 RUN npm install
 
-ADD . /monti-api
-
-EXPOSE 8081
+EXPOSE 445
 
 CMD [ "npm", "run", "start"]
