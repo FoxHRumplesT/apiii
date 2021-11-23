@@ -18,4 +18,9 @@ export class UserController {
   public async login(@Req() req: Request): Promise<User> {
     return await this.userService.login(req.body);
   }
+
+  @Get()
+  public async findAll(): Promise<User[]> {
+    return await this.userService.findAll();
+  }
 }

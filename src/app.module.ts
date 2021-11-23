@@ -3,19 +3,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import * as Modules from './modules';
+import { ImportModules } from './modules';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot(),
-    Modules.AllieModule,
-    Modules.AllieTypeModule,
-    Modules.SuscriptionModule,
-    Modules.UserModule,
-    Modules.RolModule,
-    Modules.CountryModule,
-    Modules.CityModule
+    ...ImportModules
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -55,4 +55,8 @@ export class UserService {
       }, error.status || HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+
+  public async findAll(): Promise<User[]> {
+    return await this.userRepository.find();
+  }
 }

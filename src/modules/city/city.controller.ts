@@ -12,4 +12,9 @@ export class CityController {
   public async create(@Req() req: Request): Promise<City> {
     return await this.cityService.create(req.body);
   }
+
+  @Get()
+  public async findAll(): Promise<City[]> {
+    return await this.cityService.findAll();
+  }
 }

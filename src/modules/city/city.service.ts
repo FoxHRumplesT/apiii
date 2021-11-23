@@ -18,4 +18,8 @@ export class CityService {
     cityEntity.description = body.description;
     return await this.cityRepository.save(cityEntity);
   }
+
+  public async findAll(): Promise<City[]> {
+    return await this.cityRepository.find();
+  }
 }
