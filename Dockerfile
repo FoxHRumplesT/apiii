@@ -8,4 +8,6 @@ RUN npm install
 
 ADD . /monti-api
 
+EXPOSE 8081
+
 CMD [ "npm", "run", "start"]
