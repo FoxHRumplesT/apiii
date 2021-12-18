@@ -25,6 +25,12 @@ export class Suscription {
   })
   description: string;
 
+  @Column('varchar', {
+    length: 255,
+    default: 'https://cdn2.salud180.com/sites/default/files/styles/gallerie/public/field/image/2012/12/filete_tomillo_1.-_0.jpg'
+  })
+  imageUrl: string;
+
   @Column('numeric', {
     precision: 14,
     scale: 2,

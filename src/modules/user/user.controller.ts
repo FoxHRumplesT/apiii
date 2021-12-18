@@ -23,4 +23,15 @@ export class UserController {
   public async findAll(): Promise<User[]> {
     return await this.userService.findAll();
   }
+
+  @Post('/send-reset-password')
+  @HttpCode(200)
+  public async sendResetPassword(@Req() req: Request): Promise<String> {
+    return await this.userService.sendResetPassword(req.body);
+  }
+
+  @Post('/reset-password')
+  public async resetPassword(@Req() req: Request): Promise<String> {
+    return await this.userService.resetPassword(req.body);
+  }
 }

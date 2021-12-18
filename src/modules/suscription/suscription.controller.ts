@@ -20,7 +20,7 @@ export class SuscriptionController {
 
   @Post('/send-email')
   @HttpCode(200)
-  public async sendEmail(@Req() req): Promise<String> {
-    return await this.suscriptionService.sendEmail(req.body);
+  public async sendInscriptionEmail(@Req() req): Promise<String> {
+    return await this.suscriptionService.sendInscriptionEmail(req.body);
   }
 }

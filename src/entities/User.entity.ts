@@ -28,6 +28,12 @@ export class User {
   })
   cityId: number;
 
+  @Column('varchar', {
+    length: 255,
+    nullable: true
+  })
+  resetPasswordUuid: string;
+
   @Column('varchar', {
     length: 200
   })
