@@ -23,7 +23,9 @@ export class User {
   @Column('bigint')
   suscriptionId: number;
 
-  @Column('bigint')
+  @Column('bigint', {
+    default: 2
+  })
   cityId: number;
 
   @Column('varchar', {
@@ -48,13 +50,19 @@ export class User {
   password: string;
 
   @Column('varchar', {
+    length: 100,
+    default: '+34'
+  })
+  indicator: string;
+
+  @Column('varchar', {
     length: 200
   })
   phone: string;
 
   @Column('varchar', {
     length: 200,
-    default: 'M'
+    nullable: true
   })
   gender: string;
 

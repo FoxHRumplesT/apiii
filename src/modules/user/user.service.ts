@@ -13,19 +13,16 @@ export class UserService {
 
   public async create(body: Dto.CreateDto): Promise<User> {
     let userEntity = new User();
-    userEntity.rolId = body.rolId;
+    userEntity.rolId = 1;
     userEntity.suscriptionId = body.suscriptionId;
-    userEntity.cityId = body.cityId;
     userEntity.name = body.name;
     userEntity.lastName = body.lastName;
     userEntity.email = body.email;
     userEntity.password = body.password;
+    userEntity.indicator = body.indicator;
     userEntity.phone = body.phone;
-    userEntity.gender = body.gender;
     userEntity.latitude = body.latitude;
     userEntity.longitude = body.longitude;
-    userEntity.ocupation = body.ocupation;
-    userEntity.birthdayAt = body.birthdayAt;
     return await this.userRepository.save(userEntity);
   }
 
