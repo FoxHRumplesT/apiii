@@ -22,6 +22,7 @@ export class AllieStepService {
   public async findById(allieId: number): Promise<AllieStep[]> {
     return await this.allieStepRepository.createQueryBuilder('allieStep')
       .innerJoinAndSelect('allieStep.allieDetails', 'allieDetails')
+      .innerJoinAndSelect('allieDetails.allieDetailType', 'allieDetailType')
       .where('allieStep.allieId = :allieId', { allieId })
       .getMany();
   }
