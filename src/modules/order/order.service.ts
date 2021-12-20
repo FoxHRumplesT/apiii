@@ -24,9 +24,11 @@ export class OrderService {
     const createDetails = await this.orderDetailService.create(body.orderDetail.map((item) => {
       return {
         orderId: createOrder.id,
-        ...item
+        allieDetailId: item.id,
+        name: item.name,
+        imageUrl: item.imageUrl
       }
-    }))
+    }));
     return {
       ...createOrder,
       orderDetails: createDetails
