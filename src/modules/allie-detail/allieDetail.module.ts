@@ -8,5 +8,6 @@ import { AllieDetail } from '../../entities';
   imports: [TypeOrmModule.forFeature([AllieDetail])],
   providers: [AllieDetailService],
   controllers: [AllieDetailController],
+  exports: [AllieDetailService]
 })
 export class AllieDetailModule {}

@@ -23,4 +23,12 @@ export class AllieDetailService {
   public async findAll(): Promise<AllieDetail[]> {
     return await this.allieDetailRepository.find();
   }
+
+  public async getDetails(allieStepId: number): Promise<any[]> {
+    return await this.allieDetailRepository.createQueryBuilder('allieDetail')
+      .select('"allieDetail".*, allieDetailType.id as typeId, allieDetailType.name as typeName')
+      .innerJoin('allieDetail.allieDetailType', 'allieDetailType')
+      .where('allieDetail.allieStepId = :allieStepId', { allieStepId })
+      .execute();
+  }
 }
