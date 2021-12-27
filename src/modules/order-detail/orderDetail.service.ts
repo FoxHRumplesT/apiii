@@ -23,4 +23,15 @@ export class OrderDetailService {
     });
     return await this.orderDetailRepository.save(orderDetailEntities);
   }
+
+  public async cancel(ids: number[]): Promise<string> {
+    const detailsEntity = ids.map((item) => {
+      const orderDetailEntity = new OrderDetail;
+      orderDetailEntity.id = item,
+      orderDetailEntity.deletedAt = new Date();
+      return orderDetailEntity;
+    });
+    await this.orderDetailRepository.save(detailsEntity);
+    return 'Details was be cancel';
+  }
 }

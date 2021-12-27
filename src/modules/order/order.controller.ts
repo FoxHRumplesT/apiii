@@ -1,9 +1,11 @@
 import {
   Controller,
   Post,
+  Put,
   Get,
   Req,
   HttpCode,
+  Body,
   Param
 } from '@nestjs/common';
 import { Request } from 'express';
@@ -28,5 +30,10 @@ export class OrderController {
   @Get('status/:userId')
   public async findStatus(@Param() params: { userId: number }): Promise<any> {
     return await this.orderService.findStatus(params.userId);
+  }
+
+  @Put('cancel')
+  public async cancel(@Body() body: { orderId: number }): Promise<string> {
+    return await this.orderService.cancel(body.orderId);
   }
 }

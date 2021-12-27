@@ -47,6 +47,7 @@ export class OrderService {
       .innerJoinAndSelect('order.user', 'user')
       .where('order.userId = :userId', { userId })
       .andWhere('order.deletedAt IS NULL')
+      .andWhere('orderDetails.deletedAt IS NULL')
       .orderBy('order.id', 'DESC')
       .limit(1)
       .getOne()
@@ -71,5 +72,22 @@ export class OrderService {
       },
       steps: findAllieDetail
     };
+  }
+
+  public async cancel(orderId: number): Promise<string> {
+    const findOrder = await this.orderRepository.createQueryBuilder('order')
+      .innerJoinAndSelect('order.orderDetails', 'orderDetails')
+      .where('order.id = :orderId', { orderId })
+      .andWhere('order.deletedAt IS NULL')
+      .andWhere('orderDetails.deletedAt IS NULL')
+      .getOne()
+    const deleteDetails = await this.orderDetailService.cancel(
+      findOrder.orderDetails.map((items) => items.id)
+    );
+    const orderEntity = new Order();
+    orderEntity.id = findOrder.id;
+    orderEntity.deletedAt = new Date();
+    await this.orderRepository.save(orderEntity);
+    return `Order ${orderId} was be cancel`;
   }
 }
