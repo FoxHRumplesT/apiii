@@ -35,7 +35,6 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 coverage/
-.env
 .DS_Store
 package-lock.json
 yarn.lock

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import * as moment from 'moment';
 import { Order } from '../../entities';
 import { OrderDetailService } from '../order-detail/orderDetail.service';
 import { AllieDetailService } from '../allie-detail/allieDetail.service';
@@ -72,6 +73,27 @@ export class OrderService {
       },
       steps: findAllieDetail
     };
+  }
+
+  public async findBussinesResum(initDate: string, endDate: string, allieId: number) {
+    console.log(initDate, endDate);
+    const countUser = await this.orderRepository.createQueryBuilder('order')
+      .where(`order.createdAt BETWEEN :initDate AND :endDate `, { initDate, endDate})
+      .andWhere('order.allieId = :allieId', { allieId })
+      .andWhere('order.deletedAt IS NULL')
+      .groupBy('order.userId')
+      .getCount()
+    const countTotal = await this.orderRepository.createQueryBuilder('order')
+      .where(`order.createdAt BETWEEN :initDate AND :endDate `, { initDate, endDate})
+      .andWhere('order.allieId = :allieId', { allieId })
+      .andWhere('order.deletedAt IS NULL')
+      .getCount()
+    console.log(countUser);
+    console.log(countTotal);
+    return {
+      orderTotal: countTotal,
+      customerTotal: countUser,
+    }
   }
 
   public async cancel(orderId: number): Promise<string> {
