@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AllieStepService } from './allieStep.service';
 import { AllieStepController } from './allieStep.controller';
 import { AllieDetailModule } from '../allie-detail/allieDetail.module';
-import { AllieStep } from '../../entities';
+import { AllieStep } from '../../entities/allie-step.entity';
 
 @Module({
   imports: [

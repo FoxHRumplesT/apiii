@@ -1,7 +1,7 @@
 import { Controller, Post, Get, HttpCode, Req } from '@nestjs/common';
 import { Request } from 'express';
 import { CityService } from './city.service';
-import { City } from '../../entities';
+import { City } from '../../entities/city.entity';
 
 @Controller('/city')
 export class CityController {

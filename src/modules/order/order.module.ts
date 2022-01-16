@@ -4,7 +4,7 @@ import { OrderService } from './order.service';
 import { OrderController } from './order.controller';
 import { OrderDetailModule } from '../order-detail/orderDetail.module';
 import { AllieDetailModule } from '../allie-detail/allieDetail.module';
-import { Order } from '../../entities';
+import { Order } from '../../entities/order.entity';
 
 @Module({
   imports: [

@@ -1,7 +1,7 @@
 import { Controller, Post, Get, Req, Param, HttpCode } from '@nestjs/common';
 import { Request } from 'express';
 import { AllieStepService } from './allieStep.service';
-import { AllieStep } from '../../entities';
+import { AllieStep } from '../../entities/allie-step.entity';
 
 @Controller('/allie-step')
 export class AllieStepController {

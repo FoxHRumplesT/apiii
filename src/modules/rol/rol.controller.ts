@@ -1,7 +1,7 @@
 import { Controller, Post, Get, HttpCode, Req } from '@nestjs/common';
 import { Request } from 'express';
 import { RolService } from './rol.service';
-import { Rol } from '../../entities';
+import { Rol } from '../../entities/rol.entity';
 
 @Controller('/rol')
 export class RolController {

@@ -8,7 +8,10 @@ import {
   JoinColumn,
   OneToMany
 } from 'typeorm';
-import { Rol, Suscription, City, Order } from './';
+import { Rol } from './rol.entity';
+import { Suscription } from './suscription.entity';
+import { City } from './city.entity';
+import { Order } from './order.entity';
 
 @Entity('User')
 export class User {

@@ -8,7 +8,8 @@ import {
   JoinColumn,
   OneToMany
 } from 'typeorm';
-import { AllieDetail, Allie } from './';
+import { AllieDetail } from './allie-detail.entity';
+import { Allie } from './allie.entity';
 
 @Entity('AllieStep')
 export class AllieStep {

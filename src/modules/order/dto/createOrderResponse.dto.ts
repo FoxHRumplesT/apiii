@@ -1,8 +1,6 @@
-import {
-  OrderDetail,
-  Allie,
-  User
-} from '../../../entities';
+import { OrderDetail } from '../../../entities/order-detail.entity';
+import { Allie } from '../../../entities/allie.entity';
+import { User } from '../../../entities/user.entity';
 
 export interface CreateOrderResponse {
   id: number;
