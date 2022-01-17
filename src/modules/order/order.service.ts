@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import * as moment from 'moment';
-import { Order } from '../../entities/order.entity';
+import * as momentTz from 'moment-timezone';
+import { Order } from '../../entities';
 import { OrderDetailService } from '../order-detail/orderDetail.service';
 import { AllieDetailService } from '../allie-detail/allieDetail.service';
 import * as Dto from './dto';
@@ -76,24 +76,92 @@ export class OrderService {
   }
 
   public async findBussinesResum(initDate: string, endDate: string, allieId: number) {
-    console.log(initDate, endDate);
-    const countUser = await this.orderRepository.createQueryBuilder('order')
+    const totalCustomers = await this.orderRepository.createQueryBuilder('order')
       .where(`order.createdAt BETWEEN :initDate AND :endDate `, { initDate, endDate})
       .andWhere('order.allieId = :allieId', { allieId })
       .andWhere('order.deletedAt IS NULL')
       .groupBy('order.userId')
       .getCount()
-    const countTotal = await this.orderRepository.createQueryBuilder('order')
+    const totalOrders = await this.orderRepository.createQueryBuilder('order')
       .where(`order.createdAt BETWEEN :initDate AND :endDate `, { initDate, endDate})
       .andWhere('order.allieId = :allieId', { allieId })
       .andWhere('order.deletedAt IS NULL')
       .getCount()
-    console.log(countUser);
-    console.log(countTotal);
     return {
-      orderTotal: countTotal,
-      customerTotal: countUser,
+      totalOrders,
+      totalCustomers,
+      totalPrice: 10000
     }
+  }
+
+  public async findOrderResum(allieId: number) {
+    const nowDate = momentTz().utc().format();
+    const findCountStates = await this.orderRepository.createQueryBuilder('order')
+      .select('order.state, count(*)')
+      .where('order.allieId = 1')
+      .andWhere('order.deletedAt IS NULL')
+      .groupBy('order.stateId')
+      .execute();
+    const getComplete = findCountStates.find((a) => Number(a.stateId) === 3);
+    const getCancel = findCountStates.find((a) => Number(a.stateId) === 4);
+    return {
+      completeOrders: getComplete.count || '0',
+      cancelOrders: getCancel.count || '0'
+    }
+  }
+
+  public async findOrdersByAllie(allieId: number) {
+    const orderMap = new Map();
+    const orderArray = [];
+    const getOrders = await this.orderRepository.createQueryBuilder('order')
+      .select(
+        'order.id as "orderId", ' +
+        'state.name, ' +
+        'state.id as "stateId", ' +
+        'order.createdAt, ' +
+        'orderDetail.allieDetailId as "orderDetailId"'
+      )
+      .innerJoin('order.state', 'state')
+      .innerJoin('order.orderDetails', 'orderDetail')
+      .where('order.allieId = :allieId', { allieId })
+      .andWhere('order.deletedAt IS NULL')
+      .execute()
+    getOrders.map((item) => {
+      orderMap.set(item.orderId, item);
+    })
+    const skus = getOrders.map((item) => Number(item.orderDetailId));
+    const getDetails = await this.allieDetailService.findByIds(skus);
+    orderMap.forEach(async(item) => {
+      const detailsReturn = [];
+      const findDetails = getOrders.filter((compare) => Number(compare.orderId) === Number(item.orderId));
+
+      getDetails.forEach((itemStep) => {
+        const detailsObject = [];
+
+        itemStep.details.forEach((itemDetail) => {
+          const compareDetail = findDetails.find((a) => Number(a.orderDetailId) === Number(itemDetail.id));
+          if (compareDetail) {
+            detailsObject.push(itemDetail);
+          }
+        });
+
+        if (detailsObject.length > 0) {
+          detailsReturn.push({
+            ...itemStep,
+            details: detailsObject
+          });
+        }
+      });
+
+      orderArray.push({
+        id: item.orderId,
+        stateId: item.stateId,
+        state: item.name,
+        date: momentTz(item.createdAt).tz('America/Bogota').format('HH:mm'),
+        steps: detailsReturn
+      })
+    });
+    return orderArray;
   }
 
   public async cancel(orderId: number): Promise<string> {

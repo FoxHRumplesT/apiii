@@ -6,7 +6,7 @@ import {
   BeforeInsert,
   OneToMany
 } from 'typeorm';
-import { AllieDetail } from './allie-detail.entity';
+import { AllieDetail } from './';
 
 @Entity('AllieDetailType')
 export class AllieDetailType {

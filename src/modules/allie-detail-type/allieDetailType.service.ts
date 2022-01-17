@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { AllieDetailType } from '../../entities/allie-detail-type.entity';
+import { AllieDetailType } from '../../entities';
 import * as Dto from './dto';
 
 @Injectable()

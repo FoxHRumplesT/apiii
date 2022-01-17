@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { Request } from 'express';
 import { OrderService } from './order.service';
-import { Order } from '../../entities/order.entity';
+import { Order } from '../../entities';
 
 @Controller('/order')
 export class OrderController {
@@ -41,12 +41,21 @@ export class OrderController {
     endDate,
     allieId
   }) {
-    console.log('Por lo menos entra aca!');
     return await this.orderService.findBussinesResum(
       query.initDate,
       query.endDate,
       query.allieId
     );
+  }
+
+  @Get('order-resum/:allieId')
+  public async findOrderResum(@Param() param: { allieId: number }) {
+    return await this.orderService.findOrderResum(param.allieId);
+  }
+
+  @Get(':allieId')
+  public async findOrdersByAllie(@Param() param: { allieId: number }) {
+    return await this.orderService.findOrdersByAllie(param.allieId);
   }
 
   // Put services

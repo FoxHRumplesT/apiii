@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as nodemailer from 'nodemailer';
 import { google } from 'googleapis';
-import { Suscription } from '../../entities/suscription.entity';
+import { Suscription } from '../../entities';
 import * as Dto from './dto';
 import SendEmail from '../utils/mailer/mailer.utils';
 

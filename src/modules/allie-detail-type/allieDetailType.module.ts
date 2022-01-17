@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AllieDetailTypeService } from './allieDetailType.service';
 import { AllieDetailTypeController } from './allieDetailType.controller';
-import { AllieDetailType } from '../../entities/allie-detail-type.entity';
+import { AllieDetailType } from '../../entities';
 
 @Module({
   imports: [TypeOrmModule.forFeature([AllieDetailType])],

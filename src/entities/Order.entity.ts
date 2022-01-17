@@ -8,9 +8,7 @@ import {
   JoinColumn,
   OneToMany
 } from 'typeorm';
-import { Allie } from './allie.entity';
-import { User } from './user.entity';
-import { OrderDetail } from './order-detail.entity';
+import { Allie, User, OrderDetail, State } from './';
 
 @Entity('Order')
 export class Order {
@@ -18,6 +16,11 @@ export class Order {
     type: 'bigint'
   })
   id: number;
+
+  @Column('bigint', {
+    default: 1
+  })
+  stateId: number;
 
   @Column('bigint')
   allieId: number;
@@ -58,6 +61,10 @@ export class Order {
     nullable: true
   })
   deletedAt: Date;
+
+  @ManyToOne(() => State, (state: State) => state.orders, {})
+  @JoinColumn({ name: 'stateId' })
+  state: State | null;
 
   @ManyToOne(() => Allie, (allie: Allie) => allie.orders, {})
   @JoinColumn({ name: 'allieId' })

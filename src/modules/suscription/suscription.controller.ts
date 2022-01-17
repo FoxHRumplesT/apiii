@@ -1,7 +1,7 @@
 import { Controller, Post, Get, HttpCode, Req, Res } from '@nestjs/common';
 import { Request } from 'express';
 import { SuscriptionService } from './suscription.service';
-import { Suscription } from '../../entities/suscription.entity';
+import { Suscription } from '../../entities';
 
 @Controller('/suscription')
 export class SuscriptionController {

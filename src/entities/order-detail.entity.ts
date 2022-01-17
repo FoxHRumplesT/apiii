@@ -7,8 +7,7 @@ import {
   ManyToOne,
   JoinColumn
 } from 'typeorm';
-import { Order } from './order.entity';
-import { AllieDetail } from './allie-detail.entity';
+import { Order, AllieDetail } from './';
 
 @Entity('OrderDetail')
 export class OrderDetail {

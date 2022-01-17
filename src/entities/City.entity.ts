@@ -8,8 +8,7 @@ import {
   JoinColumn,
   OneToMany
 } from 'typeorm';
-import { Country } from './country.entity';
-import { User } from './user.entity';
+import { Country, User } from './';
 
 @Entity('City')
 export class City {

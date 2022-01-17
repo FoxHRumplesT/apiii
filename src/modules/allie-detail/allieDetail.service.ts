@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { AllieDetail } from '../../entities/allie-detail.entity';
+import { AllieDetail } from '../../entities';
 import * as Dto from './dto';
 
 @Injectable()
@@ -36,7 +36,6 @@ export class AllieDetailService {
     const findDetails = await this.allieDetailRepository.createQueryBuilder('allieDetail')
       .innerJoinAndSelect('allieDetail.allieStep', 'allieStep')
       .where('allieDetail.id in (:...ids)', { ids })
-      .andWhere('allieDetail.deletedAt IS NULL')
       .getMany();
 
     const stepMap = new Map();

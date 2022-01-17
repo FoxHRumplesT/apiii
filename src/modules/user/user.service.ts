@@ -2,7 +2,7 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from '../../entities/user.entity';
+import { User } from '../../entities';
 import * as Dto from './dto';
 import SendEmail from '../utils/mailer/mailer.utils';
 

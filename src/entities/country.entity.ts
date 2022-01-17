@@ -6,7 +6,7 @@ import {
   BeforeInsert,
   OneToMany
 } from 'typeorm';
-import { City } from './city.entity';
+import { City } from './';
 
 @Entity('Country')
 export class Country {
