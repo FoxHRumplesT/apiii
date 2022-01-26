@@ -11,5 +11,5 @@ COPY --from=ts-sample-builder ./app/dist ./dist
 COPY package.json ./
 RUN npm install
 # expose port and define CMD
-EXPOSE 3000
+EXPOSE 3002
 CMD ["npm","run","start:prod"]

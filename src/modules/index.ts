@@ -6,6 +6,7 @@ import { AllieTypeModule } from './allie-type/allie-type.module';
 import { SuscriptionModule } from './suscription/suscription.module';
 import { UserModule } from './user/user.module';
 import { RolModule } from './rol/rol.module';
+import { StateModule } from './state/state.module';
 import { CountryModule } from './country/country.module';
 import { OrderModule } from './order/order.module';
 import { OrderDetailModule } from './order-detail/orderDetail.module';
@@ -21,6 +22,7 @@ export const ImportModules = [
   SuscriptionModule,
   UserModule,
   RolModule,
+  StateModule,
   CountryModule,
   OrderModule,
   OrderDetailModule,

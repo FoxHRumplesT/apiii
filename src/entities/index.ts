@@ -1,16 +1,16 @@
-import { AllieDetailType } from './allie-detail-type.entity.ts';
-import { AllieDetail } from './allie-detail.entity.ts';
-import { AllieStep } from './allie-step.entity.ts';
-import { AllieType } from './allie-type.entity.ts';
-import { Allie } from './allie.entity.ts';
-import { City } from './city.entity.ts';
-import { Country } from './country.entity.ts';
-import { OrderDetail } from './order-detail.entity.ts';
-import { Order } from './order.entity.ts';
-import { Rol } from './rol.entity.ts';
-import { State } from './state.entity.ts';
-import { Suscription } from './suscription.entity.ts';
-import { User } from './user.entity.ts';
+import { AllieDetailType } from './allie-detail-type.entity';
+import { AllieDetail } from './allie-detail.entity';
+import { AllieStep } from './allie-step.entity';
+import { AllieType } from './allie-type.entity';
+import { Allie } from './allie.entity';
+import { City } from './city.entity';
+import { Country } from './country.entity';
+import { OrderDetail } from './order-detail.entity';
+import { Order } from './order.entity';
+import { Rol } from './rol.entity';
+import { State } from './state.entity';
+import { Suscription } from './suscription.entity';
+import { User } from './user.entity';
 
 export {
   AllieDetailType,

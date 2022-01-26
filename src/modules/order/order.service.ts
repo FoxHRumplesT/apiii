@@ -77,13 +77,13 @@ export class OrderService {
 
   public async findBussinesResum(initDate: string, endDate: string, allieId: number) {
     const totalCustomers = await this.orderRepository.createQueryBuilder('order')
-      .where(`order.createdAt BETWEEN :initDate AND :endDate `, { initDate, endDate})
+      .where(`order.createdAt BETWEEN :initDate AND :endDate `, { initDate, endDate })
       .andWhere('order.allieId = :allieId', { allieId })
       .andWhere('order.deletedAt IS NULL')
       .groupBy('order.userId')
       .getCount()
     const totalOrders = await this.orderRepository.createQueryBuilder('order')
-      .where(`order.createdAt BETWEEN :initDate AND :endDate `, { initDate, endDate})
+      .where(`order.createdAt BETWEEN :initDate AND :endDate `, { initDate, endDate })
       .andWhere('order.allieId = :allieId', { allieId })
       .andWhere('order.deletedAt IS NULL')
       .getCount()
@@ -108,6 +108,24 @@ export class OrderService {
       completeOrders: getComplete.count || '0',
       cancelOrders: getCancel.count || '0'
     }
+  }
+
+  public async findHistory(initDate: string, endDate: string, allieId: number): Promise<Dto.HistoryResponseDto[]> {
+    const getHistory = await this.orderRepository.createQueryBuilder('order')
+      .innerJoinAndSelect('order.state', 'state')
+      .where(`order.createdAt BETWEEN :initDate AND :endDate `, { initDate, endDate })
+      .andWhere('order.allieId = :allieId', { allieId })
+      .andWhere('order.deletedAt IS NULL')
+      .getMany();
+    return getHistory.map((item) => {
+      return {
+        date: momentTz(item.createdAt).tz('America/Bogota').format('DD/MM/YYYY'),
+        orderId: item.id,
+        stateId: item.stateId,
+        state: item.state.name || '',
+        pickupAt: momentTz(item.pickupAt).tz('America/Bogota').format('HH:mm'),
+      }
+    })
   }
 
   public async findOrdersByAllie(allieId: number) {
@@ -157,7 +175,7 @@ export class OrderService {
         id: item.orderId,
         stateId: item.stateId,
         state: item.name,
-        date: momentTz(item.createdAt).tz('America/Bogota').format('HH:mm'),
+        date: momentTz(item.pickupAt).tz('America/Bogota').format('HH:mm'),
         steps: detailsReturn
       })
     });
@@ -179,5 +197,13 @@ export class OrderService {
     orderEntity.deletedAt = new Date();
     await this.orderRepository.save(orderEntity);
     return `Order ${orderId} was be cancel`;
+  }
+
+  public async updateState(body: { orderId: number, stateId: number }): Promise<Order> {
+    const findOrder = await this.orderRepository.findOne({
+      id: body.orderId
+    });
+    findOrder.stateId = body.stateId;
+    return await this.orderRepository.save(findOrder);
   }
 }

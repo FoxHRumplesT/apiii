@@ -12,6 +12,7 @@ import {
 import { Request } from 'express';
 import { OrderService } from './order.service';
 import { Order } from '../../entities';
+import * as Dto from './dto';
 
 @Controller('/order')
 export class OrderController {
@@ -53,6 +54,19 @@ export class OrderController {
     return await this.orderService.findOrderResum(param.allieId);
   }
 
+  @Get('history')
+  public async findHistory(@Query() query: {
+    initDate,
+    endDate,
+    allieId
+  }): Promise<Dto.HistoryResponseDto[]> {
+    return await this.orderService.findHistory(
+      query.initDate,
+      query.endDate,
+      query.allieId
+    );
+  }
+
   @Get(':allieId')
   public async findOrdersByAllie(@Param() param: { allieId: number }) {
     return await this.orderService.findOrdersByAllie(param.allieId);
@@ -62,5 +76,10 @@ export class OrderController {
   @Put('cancel')
   public async cancel(@Body() body: { orderId: number }): Promise<string> {
     return await this.orderService.cancel(body.orderId);
+  }
+
+  @Put('state')
+  public async changeState(@Body() body: { orderId: number, stateId: number }): Promise<Order> {
+    return await this.orderService.updateState(body);
   }
 }
