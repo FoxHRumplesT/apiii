@@ -8,7 +8,14 @@ import {
   JoinColumn,
   OneToMany
 } from 'typeorm';
-import { AllieStep, AllieDetailType, OrderDetail } from './';
+import {
+  Allie,
+  AllieStep,
+  AllieDetailType,
+  OrderDetail,
+  AllieDetailCategory,
+  AllieMenuAllieDetail
+} from './';
 
 @Entity('AllieDetail')
 export class AllieDetail {
@@ -17,11 +24,21 @@ export class AllieDetail {
   })
   id: number;
 
+  @Column('bigint', {
+    nullable: true
+  })
+  allieId: number;
+
   @Column('bigint')
   allieStepId: number;
 
   @Column('bigint')
   allieDetailTypeId: number;
+
+  @Column('bigint', {
+    nullable: true
+  })
+  allieDetailCategoryId: number;
 
   @Column('varchar', {
     length: 200
@@ -48,6 +65,10 @@ export class AllieDetail {
   })
   deletedAt: Date;
 
+  @ManyToOne(() => Allie, (allie: Allie) => allie.allieDetails, {})
+  @JoinColumn({ name: 'allieId' })
+  allie: Allie | null;
+
   @ManyToOne(() => AllieStep, (allieStep: AllieStep) => allieStep.allieDetails, {})
   @JoinColumn({ name: 'allieStepId' })
   allieStep: AllieStep | null;
@@ -56,8 +77,15 @@ export class AllieDetail {
   @JoinColumn({ name: 'allieDetailTypeId' })
   allieDetailType: AllieDetailType | null;
 
+  @ManyToOne(() => AllieDetailCategory, (allieDetailCategory: AllieDetailCategory) => allieDetailCategory.allieDetails, {})
+  @JoinColumn({ name: 'allieDetailCategoryId' })
+  allieDetailCategory: AllieDetailCategory | null;
+
   @OneToMany(() => OrderDetail, (orderDetail: OrderDetail) => orderDetail.allieDetail)
   orderDetails: OrderDetail[];
+
+  @OneToMany(() => AllieMenuAllieDetail, (allieMenuAllieDetail: AllieMenuAllieDetail) => allieMenuAllieDetail.allieDetail)
+  allieMenuAllieDetails: AllieMenuAllieDetail[];
 
   @BeforeUpdate()
   beforeUpdate() {

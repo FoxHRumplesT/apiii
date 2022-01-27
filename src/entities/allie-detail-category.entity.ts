@@ -8,8 +8,8 @@ import {
 } from 'typeorm';
 import { AllieDetail } from './';
 
-@Entity('AllieStep')
-export class AllieStep {
+@Entity('AllieDetailCategory')
+export class AllieDetailCategory {
   @PrimaryGeneratedColumn({
     type: 'bigint'
   })
@@ -40,7 +40,7 @@ export class AllieStep {
   })
   deletedAt: Date;
 
-  @OneToMany(() => AllieDetail, (allieDetail: AllieDetail) => allieDetail.allieStep)
+  @OneToMany(() => AllieDetail, (allieDetail: AllieDetail) => allieDetail.allieDetailCategory)
   allieDetails: AllieDetail[];
 
   @BeforeUpdate()

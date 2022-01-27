@@ -15,7 +15,6 @@ export class AllieStepService {
 
   public async create(body: Dto.CreateDto): Promise<AllieStep> {
     let allieStepEntity = new AllieStep();
-    allieStepEntity.allieId = body.allieId;
     allieStepEntity.name = body.name;
     allieStepEntity.description = body.description;
     return await this.allieStepRepository.save(allieStepEntity);
@@ -55,7 +54,6 @@ export class AllieStepService {
       });
       return {
         id: item.id,
-        allieId: item.allieId,
         name: item.name,
         description: item.description,
         types

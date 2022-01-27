@@ -1,6 +1,8 @@
 import { AllieModule } from './allie/allie.module';
 import { AllieDetailModule } from './allie-detail/allieDetail.module';
+import { AllieDetailCategoryModule } from './allie-detail-category/allie-detail-category.module';
 import { AllieDetailTypeModule } from './allie-detail-type/allieDetailType.module';
+import { AllieMenuModule } from './allie-menu/allie-menu.module';
 import { AllieStepModule } from './allie-step/allieStep.module';
 import { AllieTypeModule } from './allie-type/allie-type.module';
 import { SuscriptionModule } from './suscription/suscription.module';
@@ -16,7 +18,9 @@ import { CityModule } from './city/city.module';
 export const ImportModules = [
   AllieModule,
   AllieDetailModule,
+  AllieDetailCategoryModule,
   AllieDetailTypeModule,
+  AllieMenuModule,
   AllieStepModule,
   AllieTypeModule,
   SuscriptionModule,

@@ -4,26 +4,23 @@ import {
   PrimaryGeneratedColumn,
   BeforeUpdate,
   BeforeInsert,
-  OneToMany
+  ManyToOne,
+  JoinColumn
 } from 'typeorm';
-import { AllieDetail } from './';
+import { AllieMenu, AllieDetail } from './';
 
-@Entity('AllieStep')
-export class AllieStep {
+@Entity('AllieMenuAllieDetail')
+export class AllieMenuAllieDetail {
   @PrimaryGeneratedColumn({
     type: 'bigint'
   })
   id: number;
 
-  @Column('varchar', {
-    length: 200
-  })
-  name: string;
+  @Column('bigint')
+  allieMenuId: number;
 
-  @Column('varchar', {
-    length: 200
-  })
-  description: string;
+  @Column('bigint')
+  allieDetailId: number;
 
   @Column('timestamptz', {
     nullable: true
@@ -40,8 +37,13 @@ export class AllieStep {
   })
   deletedAt: Date;
 
-  @OneToMany(() => AllieDetail, (allieDetail: AllieDetail) => allieDetail.allieStep)
-  allieDetails: AllieDetail[];
+  @ManyToOne(() => AllieMenu, (allieMenu: AllieMenu) => allieMenu.allieMenuAllieDetails, {})
+  @JoinColumn({ name: 'allieMenuId' })
+  allieMenu: AllieMenu | null;
+
+  @ManyToOne(() => AllieDetail, (allieDetail: AllieDetail) => allieDetail.allieMenuAllieDetails, {})
+  @JoinColumn({ name: 'allieDetailId' })
+  allieDetail: AllieDetail | null;
 
   @BeforeUpdate()
   beforeUpdate() {

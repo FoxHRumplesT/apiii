@@ -8,7 +8,7 @@ import {
   JoinColumn,
   OneToMany
 } from 'typeorm';
-import { AllieType, AllieStep, Order } from './';
+import { AllieType, Order, AllieMenu, AllieDetail } from './';
 
 @Entity('Allie')
 export class Allie {
@@ -69,11 +69,14 @@ export class Allie {
   @JoinColumn({ name: 'allieTypeId' })
   allieType: AllieType | null;
 
-  @OneToMany(() => AllieStep, (allieStep: AllieStep) => allieStep.allie)
-  allieSteps: AllieStep[];
-
   @OneToMany(() => Order, (order: Order) => order.allie)
   orders: Order[];
+
+  @OneToMany(() => AllieMenu, (allieMenu: AllieMenu) => allieMenu.allie)
+  allieMenus: AllieMenu[];
+
+  @OneToMany(() => AllieDetail, (allieDetail: AllieDetail) => allieDetail.allie)
+  allieDetails: AllieDetail[];
 
   @BeforeUpdate()
   beforeUpdate() {
