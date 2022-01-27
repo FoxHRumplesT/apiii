@@ -8,7 +8,7 @@ import {
   JoinColumn,
   OneToMany
 } from 'typeorm';
-import { Rol, Suscription, City, Order } from './';
+import { Rol, Suscription, City, Order } from '.';
 
 @Entity('User')
 export class User {
