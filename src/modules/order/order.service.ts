@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import * as momentTz from 'moment-timezone';
+import momentTz from 'moment-timezone';
 import { Order } from '../../entities';
 import { OrderDetailService } from '../order-detail/orderDetail.service';
 import { AllieDetailService } from '../allie-detail/allieDetail.service';
