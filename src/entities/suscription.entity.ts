@@ -6,7 +6,7 @@ import {
   BeforeInsert,
   OneToMany
 } from 'typeorm';
-import { User } from './';
+import { User } from '.';
 
 @Entity('Suscription')
 export class Suscription {
